@@ -1,6 +1,7 @@
 {
 	"name": "vacina_covid",
 	"properties": {
+		"description": "Dados da API da Campanha\nNacional de Vacinação contra a Covid-19 ",
 		"linkedServiceName": {
 			"referenceName": "HttpServer1",
 			"type": "LinkedServiceReference"
