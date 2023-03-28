@@ -1,6 +1,7 @@
 {
 	"name": "pipeline1",
 	"properties": {
+		"description": "Campanha Nacional de\nVacinação da Covid-19",
 		"activities": [
 			{
 				"name": "Copy data1",
