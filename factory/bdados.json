@@ -1,0 +1,9 @@
+{
+	"name": "bdados",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "e978a387-cbda-4cb6-a346-046645de0755",
+		"tenantId": "14cbd5a7-ec94-46ba-b314-cc0fc972a161"
+	}
+}
