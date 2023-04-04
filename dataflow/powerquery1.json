@@ -1,0 +1,12 @@
+{
+	"name": "powerquery1",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"folder": {
+			"name": "Nova pasta"
+		},
+		"typeProperties": {
+			"sources": []
+		}
+	}
+}
