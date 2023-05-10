@@ -1,0 +1,105 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nome do Data Factory",
+			"defaultValue": "bdados"
+		},
+		"HttpServer_password": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'password' de 'HttpServer'"
+		},
+		"HttpServer1_password": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'password' de 'HttpServer1'"
+		},
+		"HttpServer2_password": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'password' de 'HttpServer2'"
+		},
+		"HttpServer_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://imunizacao-es.saude.gov.br/_search"
+		},
+		"HttpServer_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "imunizacao_public"
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://imunizacao-es.saude.gov.br/search"
+		},
+		"HttpServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "imunizacao_public"
+		},
+		"HttpServer2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://imunizacao-es.saude.gov.br/_search"
+		},
+		"HttpServer2_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "imunizacao_public"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI para a conta de armazenamento contendo os modelos do ARM vinculados"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Token SAS para a conta de armazenamento contendo modelos do ARM vinculados"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "bdados_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"HttpServer_password": {
+						"value": "[parameters('HttpServer_password')]"
+					},
+					"HttpServer1_password": {
+						"value": "[parameters('HttpServer1_password')]"
+					},
+					"HttpServer2_password": {
+						"value": "[parameters('HttpServer2_password')]"
+					},
+					"HttpServer_properties_typeProperties_url": {
+						"value": "[parameters('HttpServer_properties_typeProperties_url')]"
+					},
+					"HttpServer_properties_typeProperties_userName": {
+						"value": "[parameters('HttpServer_properties_typeProperties_userName')]"
+					},
+					"HttpServer1_properties_typeProperties_url": {
+						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
+					},
+					"HttpServer1_properties_typeProperties_userName": {
+						"value": "[parameters('HttpServer1_properties_typeProperties_userName')]"
+					},
+					"HttpServer2_properties_typeProperties_url": {
+						"value": "[parameters('HttpServer2_properties_typeProperties_url')]"
+					},
+					"HttpServer2_properties_typeProperties_userName": {
+						"value": "[parameters('HttpServer2_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

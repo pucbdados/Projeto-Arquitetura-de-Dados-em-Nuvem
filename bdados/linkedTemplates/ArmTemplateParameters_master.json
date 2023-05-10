@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "bdados"
+		},
+		"HttpServer_password": {
+			"value": ""
+		},
+		"HttpServer1_password": {
+			"value": ""
+		},
+		"HttpServer2_password": {
+			"value": ""
+		},
+		"HttpServer_properties_typeProperties_url": {
+			"value": "https://imunizacao-es.saude.gov.br/_search"
+		},
+		"HttpServer_properties_typeProperties_userName": {
+			"value": "imunizacao_public"
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"value": "https://imunizacao-es.saude.gov.br/search"
+		},
+		"HttpServer1_properties_typeProperties_userName": {
+			"value": "imunizacao_public"
+		},
+		"HttpServer2_properties_typeProperties_url": {
+			"value": "https://imunizacao-es.saude.gov.br/_search"
+		},
+		"HttpServer2_properties_typeProperties_userName": {
+			"value": "imunizacao_public"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
