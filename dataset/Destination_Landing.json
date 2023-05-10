@@ -1,5 +1,5 @@
 {
-	"name": "Json1",
+	"name": "Destination_Landing",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
