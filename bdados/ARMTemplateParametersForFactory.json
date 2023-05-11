@@ -17,6 +17,9 @@
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
 		"HttpServer_properties_typeProperties_url": {
 			"value": "https://imunizacao-es.saude.gov.br/_search"
 		},

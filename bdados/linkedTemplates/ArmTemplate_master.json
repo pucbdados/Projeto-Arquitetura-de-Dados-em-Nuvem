@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'accountKey' de 'AzureDataLakeStorage1'"
 		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'AzureSqlDatabase1'"
+		},
 		"HttpServer_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://imunizacao-es.saude.gov.br/_search"
@@ -89,6 +93,9 @@
 					},
 					"AzureDataLakeStorage1_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
+					"AzureSqlDatabase1_connectionString": {
+						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
 					},
 					"HttpServer_properties_typeProperties_url": {
 						"value": "[parameters('HttpServer_properties_typeProperties_url')]"
