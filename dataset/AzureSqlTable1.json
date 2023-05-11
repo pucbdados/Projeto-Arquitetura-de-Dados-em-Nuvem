@@ -46,7 +46,8 @@
 			},
 			{
 				"name": "paciente_idade",
-				"type": "varchar"
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "paciente_endereco_cep",
