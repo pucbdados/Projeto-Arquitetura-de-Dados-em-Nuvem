@@ -12,10 +12,21 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "flatten1"
+				},
+				{
+					"name": "stringify1"
 				}
 			],
 			"scriptLines": [
@@ -71,7 +82,63 @@
 				"          paciente_endereco_coIbgeMunicipio = hits.hits.{_source}.paciente_endereco_coIbgeMunicipio",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flatten1"
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"flatten1 stringify(vacina_grupoAtendimento_nome = ERROR_FUNCTION('') ? string,",
+				"     format: 'delimited',",
+				"     columnNamesAsHeader: false,",
+				"     columnDelimiter: ',',",
+				"     nullValue: '') ~> stringify1",
+				"stringify1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          vacina_grupoAtendimento_nome as string,",
+				"          vacina_codigo as string,",
+				"          paciente_dataNascimento as string,",
+				"          ds_condicao_maternal as string,",
+				"          paciente_endereco_nmPais as string,",
+				"          paciente_racaCor_valor as string,",
+				"          sistema_origem as string,",
+				"          paciente_id as string,",
+				"          paciente_endereco_uf as string,",
+				"          paciente_idade as string,",
+				"          paciente_endereco_cep as string,",
+				"          estabelecimento_valor as string,",
+				"          estabelecimento_municipio_codigo as string,",
+				"          data_importacao_datalake as string,",
+				"          paciente_enumSexoBiologico as string,",
+				"          estabelecimento_municipio_nome as string,",
+				"          vacina_grupoAtendimento_codigo as string,",
+				"          vacina_descricao_dose as string,",
+				"          paciente_endereco_nmMunicipio as string,",
+				"          vacina_categoria_nome as string,",
+				"          vacina_fabricante_nome as string,",
+				"          vacina_categoria_codigo as string,",
+				"          dt_deleted as string,",
+				"          paciente_nacionalidade_enumNacionalidade as string,",
+				"          vacina_numDose as string,",
+				"          status as string,",
+				"          document_id as string,",
+				"          vacina_lote as string,",
+				"          estalecimento_noFantasia as string,",
+				"          paciente_racaCor_codigo as string,",
+				"          estabelecimento_razaoSocial as string,",
+				"          vacina_nome as string,",
+				"          estabelecimento_uf as string,",
+				"          vacina_dataAplicacao as string,",
+				"          co_condicao_maternal as string,",
+				"          paciente_endereco_coPais as string,",
+				"          vacina_fabricante_referencia as string,",
+				"          paciente_endereco_coIbgeMunicipio as string",
+				"     ),",
+				"     deletable:true,",
+				"     insertable:true,",
+				"     updateable:true,",
+				"     upsertable:true,",
+				"     skipKeyWrites:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
