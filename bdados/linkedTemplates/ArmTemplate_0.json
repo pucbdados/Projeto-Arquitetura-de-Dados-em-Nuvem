@@ -615,7 +615,7 @@
 						"folderPath": "raw",
 						"fileSystem": "bdados"
 					},
-					"compressionCodec": "snappy"
+					"compressionCodec": "none"
 				},
 				"schema": []
 			},
@@ -816,8 +816,7 @@
 								"datasetParameters": {
 									"source1": {},
 									"sink1": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
