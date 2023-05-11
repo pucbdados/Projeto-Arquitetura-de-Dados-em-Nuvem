@@ -13,7 +13,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "flatten1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          took as integer,",
@@ -24,7 +28,50 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     documentForm: 'documentPerLine') ~> source1"
+				"     documentForm: 'documentPerLine') ~> source1",
+				"source1 foldDown(unroll(hits.hits),",
+				"     mapColumn(",
+				"          vacina_grupoAtendimento_nome = hits.hits.{_source}.vacina_grupoAtendimento_nome,",
+				"          vacina_codigo = hits.hits.{_source}.vacina_codigo,",
+				"          paciente_dataNascimento = hits.hits.{_source}.paciente_dataNascimento,",
+				"          ds_condicao_maternal = hits.hits.{_source}.ds_condicao_maternal,",
+				"          paciente_endereco_nmPais = hits.hits.{_source}.paciente_endereco_nmPais,",
+				"          paciente_racaCor_valor = hits.hits.{_source}.paciente_racaCor_valor,",
+				"          sistema_origem = hits.hits.{_source}.sistema_origem,",
+				"          paciente_id = hits.hits.{_source}.paciente_id,",
+				"          paciente_endereco_uf = hits.hits.{_source}.paciente_endereco_uf,",
+				"          paciente_idade = hits.hits.{_source}.paciente_idade,",
+				"          paciente_endereco_cep = hits.hits.{_source}.paciente_endereco_cep,",
+				"          estabelecimento_valor = hits.hits.{_source}.estabelecimento_valor,",
+				"          estabelecimento_municipio_codigo = hits.hits.{_source}.estabelecimento_municipio_codigo,",
+				"          data_importacao_datalake = hits.hits.{_source}.data_importacao_datalake,",
+				"          paciente_enumSexoBiologico = hits.hits.{_source}.paciente_enumSexoBiologico,",
+				"          estabelecimento_municipio_nome = hits.hits.{_source}.estabelecimento_municipio_nome,",
+				"          vacina_grupoAtendimento_codigo = hits.hits.{_source}.vacina_grupoAtendimento_codigo,",
+				"          vacina_descricao_dose = hits.hits.{_source}.vacina_descricao_dose,",
+				"          paciente_endereco_nmMunicipio = hits.hits.{_source}.paciente_endereco_nmMunicipio,",
+				"          vacina_categoria_nome = hits.hits.{_source}.vacina_categoria_nome,",
+				"          vacina_fabricante_nome = hits.hits.{_source}.vacina_fabricante_nome,",
+				"          vacina_categoria_codigo = hits.hits.{_source}.vacina_categoria_codigo,",
+				"          dt_deleted = hits.hits.{_source}.dt_deleted,",
+				"          paciente_nacionalidade_enumNacionalidade = hits.hits.{_source}.paciente_nacionalidade_enumNacionalidade,",
+				"          vacina_numDose = hits.hits.{_source}.vacina_numDose,",
+				"          status = hits.hits.{_source}.status,",
+				"          document_id = hits.hits.{_source}.document_id,",
+				"          vacina_lote = hits.hits.{_source}.vacina_lote,",
+				"          estalecimento_noFantasia = hits.hits.{_source}.estalecimento_noFantasia,",
+				"          paciente_racaCor_codigo = hits.hits.{_source}.paciente_racaCor_codigo,",
+				"          estabelecimento_razaoSocial = hits.hits.{_source}.estabelecimento_razaoSocial,",
+				"          vacina_nome = hits.hits.{_source}.vacina_nome,",
+				"          estabelecimento_uf = hits.hits.{_source}.estabelecimento_uf,",
+				"          vacina_dataAplicacao = hits.hits.{_source}.vacina_dataAplicacao,",
+				"          co_condicao_maternal = hits.hits.{_source}.co_condicao_maternal,",
+				"          paciente_endereco_coPais = hits.hits.{_source}.paciente_endereco_coPais,",
+				"          vacina_fabricante_referencia = hits.hits.{_source}.vacina_fabricante_referencia,",
+				"          paciente_endereco_coIbgeMunicipio = hits.hits.{_source}.paciente_endereco_coIbgeMunicipio",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1"
 			]
 		}
 	}
