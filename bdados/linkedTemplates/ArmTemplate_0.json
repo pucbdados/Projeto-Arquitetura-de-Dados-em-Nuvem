@@ -225,7 +225,8 @@
 					},
 					{
 						"name": "paciente_idade",
-						"type": "varchar"
+						"type": "int",
+						"precision": 10
 					},
 					{
 						"name": "paciente_endereco_cep",
@@ -756,7 +757,7 @@
 						"          sistema_origem as string,",
 						"          paciente_id as string,",
 						"          paciente_endereco_uf as string,",
-						"          paciente_idade as string,",
+						"          paciente_idade as integer,",
 						"          paciente_endereco_cep as string,",
 						"          estabelecimento_valor as string,",
 						"          estabelecimento_municipio_codigo as string,",
@@ -790,11 +791,9 @@
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     saveOrder: 1,",
 						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
 						"          vacina_grupoAtendimento_nome,",
@@ -835,9 +834,7 @@
 						"          paciente_endereco_coPais,",
 						"          vacina_fabricante_referencia,",
 						"          paciente_endereco_coIbgeMunicipio",
-						"     ),",
-						"     preCommands: [],",
-						"     postCommands: []) ~> sink1"
+						"     )) ~> sink1"
 					]
 				}
 			},
