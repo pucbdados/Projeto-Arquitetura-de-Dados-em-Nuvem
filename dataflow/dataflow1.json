@@ -83,7 +83,6 @@
 				"flatten1 sink(allowSchemaDrift: false,",
 				"     validateSchema: true,",
 				"     input(",
-				"          id as integer,",
 				"          vacina_grupoAtendimento_nome as string,",
 				"          vacina_codigo as string,",
 				"          paciente_dataNascimento as string,",
