@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'AzureSqlDatabase1'"
 		},
+		"AzureDataLakeStorage2_accountKey": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'accountKey' de 'AzureDataLakeStorage2'"
+		},
 		"HttpServer_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://imunizacao-es.saude.gov.br/_search"
@@ -52,6 +56,10 @@
 			"defaultValue": "imunizacao_public"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://bdados.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://bdados.dfs.core.windows.net/"
 		},
@@ -97,6 +105,9 @@
 					"AzureSqlDatabase1_connectionString": {
 						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
 					},
+					"AzureDataLakeStorage2_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage2_accountKey')]"
+					},
 					"HttpServer_properties_typeProperties_url": {
 						"value": "[parameters('HttpServer_properties_typeProperties_url')]"
 					},
@@ -117,6 +128,9 @@
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorage2_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]"
 					}
 				}
 			},

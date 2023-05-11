@@ -20,6 +20,9 @@
 		"AzureSqlDatabase1_connectionString": {
 			"value": ""
 		},
+		"AzureDataLakeStorage2_accountKey": {
+			"value": ""
+		},
 		"HttpServer_properties_typeProperties_url": {
 			"value": "https://imunizacao-es.saude.gov.br/_search"
 		},
@@ -39,6 +42,9 @@
 			"value": "imunizacao_public"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://bdados.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
 			"value": "https://bdados.dfs.core.windows.net/"
 		},
 		"containerUri": {

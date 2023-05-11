@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'AzureSqlDatabase1'"
 		},
+		"AzureDataLakeStorage2_accountKey": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'accountKey' de 'AzureDataLakeStorage2'"
+		},
 		"HttpServer_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://imunizacao-es.saude.gov.br/_search"
@@ -52,6 +56,10 @@
 			"defaultValue": "imunizacao_public"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://bdados.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://bdados.dfs.core.windows.net/"
 		}
@@ -146,6 +154,23 @@
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
 					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage2_accountKey')]"
+					}
 				}
 			},
 			"dependsOn": []
@@ -574,6 +599,31 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Parquet1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "raw",
+						"fileSystem": "bdados"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage2')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Landing')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -659,7 +709,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AzureSqlTable1",
+								"referenceName": "Parquet1",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -726,55 +776,12 @@
 						"     skipDuplicateMapOutputs: false) ~> flatten1",
 						"flatten1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     input(",
-						"          id as integer,",
-						"          vacina_grupoAtendimento_nome as string,",
-						"          vacina_codigo as string,",
-						"          paciente_dataNascimento as string,",
-						"          ds_condicao_maternal as string,",
-						"          paciente_endereco_nmPais as string,",
-						"          paciente_racaCor_valor as string,",
-						"          sistema_origem as string,",
-						"          paciente_id as string,",
-						"          paciente_endereco_uf as string,",
-						"          paciente_idade as string,",
-						"          paciente_endereco_cep as string,",
-						"          estabelecimento_valor as string,",
-						"          estabelecimento_municipio_codigo as string,",
-						"          data_importacao_datalake as string,",
-						"          paciente_enumSexoBiologico as string,",
-						"          estabelecimento_municipio_nome as string,",
-						"          vacina_grupoAtendimento_codigo as string,",
-						"          vacina_descricao_dose as string,",
-						"          paciente_endereco_nmMunicipio as string,",
-						"          vacina_categoria_nome as string,",
-						"          vacina_fabricante_nome as string,",
-						"          vacina_categoria_codigo as string,",
-						"          dt_deleted as string,",
-						"          paciente_nacionalidade_enumNacionalidade as string,",
-						"          vacina_numDose as string,",
-						"          status as string,",
-						"          document_id as string,",
-						"          vacina_lote as string,",
-						"          estalecimento_noFantasia as string,",
-						"          paciente_racaCor_codigo as string,",
-						"          estabelecimento_razaoSocial as string,",
-						"          vacina_nome as string,",
-						"          estabelecimento_uf as string,",
-						"          vacina_dataAplicacao as string,",
-						"          co_condicao_maternal as string,",
-						"          paciente_endereco_coPais as string,",
-						"          vacina_fabricante_referencia as string,",
-						"          paciente_endereco_coIbgeMunicipio as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
+						"     format: 'parquet',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
 						"          vacina_grupoAtendimento_nome,",
 						"          vacina_codigo,",
@@ -819,7 +826,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Destination_Landing')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
+				"[concat(variables('factoryId'), '/datasets/Parquet1')]"
 			]
 		},
 		{
