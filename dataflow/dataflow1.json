@@ -24,6 +24,9 @@
 			"transformations": [
 				{
 					"name": "flatten1"
+				},
+				{
+					"name": "unpivot1"
 				}
 			],
 			"scriptLines": [
@@ -80,7 +83,13 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flatten1",
-				"flatten1 sink(allowSchemaDrift: true,",
+				"flatten1 unpivot(output(",
+				"          teste as string",
+				"     ),",
+				"     ungroupBy(vacina_grupoAtendimento_nome),",
+				"     lateral: true,",
+				"     ignoreNullPivots: false) ~> unpivot1",
+				"unpivot1 sink(allowSchemaDrift: true,",
 				"     validateSchema: true,",
 				"     format: 'parquet',",
 				"     fileSystem: 'bdados',",
