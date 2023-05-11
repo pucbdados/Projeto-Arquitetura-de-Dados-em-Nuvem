@@ -14,6 +14,9 @@
 		"HttpServer2_password": {
 			"value": ""
 		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
 		"HttpServer_properties_typeProperties_url": {
 			"value": "https://imunizacao-es.saude.gov.br/_search"
 		},
@@ -31,6 +34,9 @@
 		},
 		"HttpServer2_properties_typeProperties_userName": {
 			"value": "imunizacao_public"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://bdados.dfs.core.windows.net/"
 		}
 	}
 }
