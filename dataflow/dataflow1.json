@@ -141,7 +141,6 @@
 				"          sistema_origem,",
 				"          paciente_id,",
 				"          paciente_endereco_uf,",
-				"          paciente_idade,",
 				"          paciente_endereco_cep,",
 				"          estabelecimento_valor,",
 				"          estabelecimento_municipio_codigo,",
