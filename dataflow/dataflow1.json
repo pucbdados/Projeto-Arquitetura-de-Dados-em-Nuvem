@@ -26,7 +26,7 @@
 					"name": "flatten1"
 				},
 				{
-					"name": "unpivot1"
+					"name": "parse1"
 				}
 			],
 			"scriptLines": [
@@ -83,13 +83,10 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flatten1",
-				"flatten1 unpivot(output(",
-				"          teste as string",
-				"     ),",
-				"     ungroupBy(vacina_grupoAtendimento_nome),",
-				"     lateral: true,",
-				"     ignoreNullPivots: false) ~> unpivot1",
-				"unpivot1 sink(allowSchemaDrift: true,",
+				"flatten1 parse(estabelecimento_valor = ERROR_FUNCTION(''),",
+				"     format: 'json',",
+				"     documentForm: 'documentPerLine') ~> parse1",
+				"parse1 sink(allowSchemaDrift: true,",
 				"     validateSchema: true,",
 				"     format: 'parquet',",
 				"     fileSystem: 'bdados',",
