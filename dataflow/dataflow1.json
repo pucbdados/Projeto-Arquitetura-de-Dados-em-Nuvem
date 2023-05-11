@@ -6,19 +6,27 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "SES",
+						"referenceName": "Destination_Landing",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "flatten1"
+				}
+			],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     limit: 100,",
 				"     ignoreNoFilesFound: false,",
-				"     documentForm: 'documentPerLine') ~> source1"
+				"     documentForm: 'singleDocument') ~> source1",
+				"source1 foldDown(unroll(),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1"
 			]
 		}
 	}

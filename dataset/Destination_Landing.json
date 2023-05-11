@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "landing",
+				"fileName": "7b4b9906-33fb-4104-87ab-6b0ea067b72c.txt",
 				"fileSystem": "bdados"
 			}
 		},
