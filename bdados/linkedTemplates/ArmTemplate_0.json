@@ -7,6 +7,18 @@
 			"metadata": "Nome do Data Factory",
 			"defaultValue": "bdados"
 		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'accountKey' de 'AzureDataLakeStorage1'"
+		},
+		"AzureDataLakeStorage2_accountKey": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'accountKey' de 'AzureDataLakeStorage2'"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'AzureSqlDatabase1'"
+		},
 		"HttpServer_password": {
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'password' de 'HttpServer'"
@@ -19,17 +31,13 @@
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'password' de 'HttpServer2'"
 		},
-		"AzureDataLakeStorage1_accountKey": {
-			"type": "secureString",
-			"metadata": "Cadeia de caracteres segura para 'accountKey' de 'AzureDataLakeStorage1'"
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://bdados.dfs.core.windows.net/"
 		},
-		"AzureSqlDatabase1_connectionString": {
-			"type": "secureString",
-			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'AzureSqlDatabase1'"
-		},
-		"AzureDataLakeStorage2_accountKey": {
-			"type": "secureString",
-			"metadata": "Cadeia de caracteres segura para 'accountKey' de 'AzureDataLakeStorage2'"
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://bdados.dfs.core.windows.net/"
 		},
 		"HttpServer_properties_typeProperties_url": {
 			"type": "string",
@@ -54,20 +62,59 @@
 		"HttpServer2_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "imunizacao_public"
-		},
-		"AzureDataLakeStorage1_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://bdados.dfs.core.windows.net/"
-		},
-		"AzureDataLakeStorage2_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://bdados.dfs.core.windows.net/"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage2_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/HttpServer')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -129,72 +176,177 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDataLakeStorage2_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SES')]",
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "HttpServer",
+					"referenceName": "AzureSqlDatabase1",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "HttpServerLocation"
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "vacina_grupoAtendimento_nome",
+						"type": "varchar"
+					},
+					{
+						"name": "vacina_codigo",
+						"type": "varchar"
+					},
+					{
+						"name": "paciente_dataNascimento",
+						"type": "varchar"
+					},
+					{
+						"name": "ds_condicao_maternal",
+						"type": "varchar"
+					},
+					{
+						"name": "paciente_endereco_nmPais",
+						"type": "varchar"
+					},
+					{
+						"name": "paciente_racaCor_valor",
+						"type": "varchar"
+					},
+					{
+						"name": "sistema_origem",
+						"type": "varchar"
+					},
+					{
+						"name": "paciente_id",
+						"type": "varchar"
+					},
+					{
+						"name": "paciente_endereco_uf",
+						"type": "varchar"
+					},
+					{
+						"name": "paciente_idade",
+						"type": "varchar"
+					},
+					{
+						"name": "paciente_endereco_cep",
+						"type": "varchar"
+					},
+					{
+						"name": "estabelecimento_valor",
+						"type": "varchar"
+					},
+					{
+						"name": "estabelecimento_municipio_codigo",
+						"type": "varchar"
+					},
+					{
+						"name": "data_importacao_datalake",
+						"type": "varchar"
+					},
+					{
+						"name": "paciente_enumSexoBiologico",
+						"type": "varchar"
+					},
+					{
+						"name": "estabelecimento_municipio_nome",
+						"type": "varchar"
+					},
+					{
+						"name": "vacina_grupoAtendimento_codigo",
+						"type": "varchar"
+					},
+					{
+						"name": "vacina_descricao_dose",
+						"type": "varchar"
+					},
+					{
+						"name": "paciente_endereco_nmMunicipio",
+						"type": "varchar"
+					},
+					{
+						"name": "vacina_categoria_nome",
+						"type": "varchar"
+					},
+					{
+						"name": "vacina_fabricante_nome",
+						"type": "varchar"
+					},
+					{
+						"name": "vacina_categoria_codigo",
+						"type": "varchar"
+					},
+					{
+						"name": "dt_deleted",
+						"type": "varchar"
+					},
+					{
+						"name": "paciente_nacionalidade_enumNacionalidade",
+						"type": "varchar"
+					},
+					{
+						"name": "vacina_numDose",
+						"type": "varchar"
+					},
+					{
+						"name": "status",
+						"type": "varchar"
+					},
+					{
+						"name": "document_id",
+						"type": "varchar"
+					},
+					{
+						"name": "vacina_lote",
+						"type": "varchar"
+					},
+					{
+						"name": "estalecimento_noFantasia",
+						"type": "varchar"
+					},
+					{
+						"name": "paciente_racaCor_codigo",
+						"type": "varchar"
+					},
+					{
+						"name": "estabelecimento_razaoSocial",
+						"type": "varchar"
+					},
+					{
+						"name": "vacina_nome",
+						"type": "varchar"
+					},
+					{
+						"name": "estabelecimento_uf",
+						"type": "varchar"
+					},
+					{
+						"name": "vacina_dataAplicacao",
+						"type": "varchar"
+					},
+					{
+						"name": "co_condicao_maternal",
+						"type": "varchar"
+					},
+					{
+						"name": "paciente_endereco_coPais",
+						"type": "varchar"
+					},
+					{
+						"name": "vacina_fabricante_referencia",
+						"type": "varchar"
+					},
+					{
+						"name": "paciente_endereco_coIbgeMunicipio",
+						"type": "varchar"
 					}
-				},
-				"schema": {}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "t_stage_ses"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/HttpServer')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
 			]
 		},
 		{
@@ -420,182 +572,25 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"name": "[concat(parameters('factoryName'), '/SES')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
+					"referenceName": "HttpServer",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "vacina_grupoAtendimento_nome",
-						"type": "varchar"
-					},
-					{
-						"name": "vacina_codigo",
-						"type": "varchar"
-					},
-					{
-						"name": "paciente_dataNascimento",
-						"type": "varchar"
-					},
-					{
-						"name": "ds_condicao_maternal",
-						"type": "varchar"
-					},
-					{
-						"name": "paciente_endereco_nmPais",
-						"type": "varchar"
-					},
-					{
-						"name": "paciente_racaCor_valor",
-						"type": "varchar"
-					},
-					{
-						"name": "sistema_origem",
-						"type": "varchar"
-					},
-					{
-						"name": "paciente_id",
-						"type": "varchar"
-					},
-					{
-						"name": "paciente_endereco_uf",
-						"type": "varchar"
-					},
-					{
-						"name": "paciente_idade",
-						"type": "varchar"
-					},
-					{
-						"name": "paciente_endereco_cep",
-						"type": "varchar"
-					},
-					{
-						"name": "estabelecimento_valor",
-						"type": "varchar"
-					},
-					{
-						"name": "estabelecimento_municipio_codigo",
-						"type": "varchar"
-					},
-					{
-						"name": "data_importacao_datalake",
-						"type": "varchar"
-					},
-					{
-						"name": "paciente_enumSexoBiologico",
-						"type": "varchar"
-					},
-					{
-						"name": "estabelecimento_municipio_nome",
-						"type": "varchar"
-					},
-					{
-						"name": "vacina_grupoAtendimento_codigo",
-						"type": "varchar"
-					},
-					{
-						"name": "vacina_descricao_dose",
-						"type": "varchar"
-					},
-					{
-						"name": "paciente_endereco_nmMunicipio",
-						"type": "varchar"
-					},
-					{
-						"name": "vacina_categoria_nome",
-						"type": "varchar"
-					},
-					{
-						"name": "vacina_fabricante_nome",
-						"type": "varchar"
-					},
-					{
-						"name": "vacina_categoria_codigo",
-						"type": "varchar"
-					},
-					{
-						"name": "dt_deleted",
-						"type": "varchar"
-					},
-					{
-						"name": "paciente_nacionalidade_enumNacionalidade",
-						"type": "varchar"
-					},
-					{
-						"name": "vacina_numDose",
-						"type": "varchar"
-					},
-					{
-						"name": "status",
-						"type": "varchar"
-					},
-					{
-						"name": "document_id",
-						"type": "varchar"
-					},
-					{
-						"name": "vacina_lote",
-						"type": "varchar"
-					},
-					{
-						"name": "estalecimento_noFantasia",
-						"type": "varchar"
-					},
-					{
-						"name": "paciente_racaCor_codigo",
-						"type": "varchar"
-					},
-					{
-						"name": "estabelecimento_razaoSocial",
-						"type": "varchar"
-					},
-					{
-						"name": "vacina_nome",
-						"type": "varchar"
-					},
-					{
-						"name": "estabelecimento_uf",
-						"type": "varchar"
-					},
-					{
-						"name": "vacina_dataAplicacao",
-						"type": "varchar"
-					},
-					{
-						"name": "co_condicao_maternal",
-						"type": "varchar"
-					},
-					{
-						"name": "paciente_endereco_coPais",
-						"type": "varchar"
-					},
-					{
-						"name": "vacina_fabricante_referencia",
-						"type": "varchar"
-					},
-					{
-						"name": "paciente_endereco_coIbgeMunicipio",
-						"type": "varchar"
-					}
-				],
+				"type": "Json",
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "t_stage_ses "
-				}
+					"location": {
+						"type": "HttpServerLocation"
+					}
+				},
+				"schema": {}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+				"[concat(variables('factoryId'), '/linkedServices/HttpServer')]"
 			]
 		},
 		{
@@ -752,7 +747,6 @@
 						"flatten1 sink(allowSchemaDrift: false,",
 						"     validateSchema: true,",
 						"     input(",
-						"          id as integer,",
 						"          vacina_grupoAtendimento_nome as string,",
 						"          vacina_codigo as string,",
 						"          paciente_dataNascimento as string,",
@@ -878,8 +872,7 @@
 								"datasetParameters": {
 									"source1": {},
 									"sink1": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
